@@ -1,2 +1,2 @@
-# xenux
-Basic Coreutils Written By Me.
+# mutils
+Basic Coreutils Written By Me.For the Musl standart library.
