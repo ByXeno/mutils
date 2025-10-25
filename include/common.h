@@ -11,6 +11,10 @@
 #include <errno.h>
 #include <sys/types.h>
 
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <dirent.h>
+
 
 #define RESET       "\033[0m"
 

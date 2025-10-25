@@ -1,6 +1,5 @@
 #define _DEFAULT_SOURCE
 #include "common.h"
-#include <dirent.h>
 
 typedef struct {
     bool no_color;

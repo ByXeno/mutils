@@ -1,7 +1,4 @@
 #include "common.h"
-#include <fcntl.h>
-#include <dirent.h>
-#include <sys/stat.h>
 
 typedef struct {
     bool recursive;
