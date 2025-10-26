@@ -1,4 +1,6 @@
 #include "common.h"
+#define FLAGS_IMPLEMENTATION
+#include "flags.h"
 
 typedef struct {
     bool line_numbers;
@@ -59,33 +61,26 @@ bool cat(char* path,config_t* conf)
     return true;
 }
 
+config_t conf = {0};
+flag_t flags[] = {
+    {.flag = "number",.desc = "enables the line numbers",.addr = &conf.line_numbers,.type = as_bool},
+    {.flag = "n",.desc = "enables the line numbers",.addr = &conf.line_numbers,.type = as_bool},
+};
+
+
 int main(int argc,char** argv)
 {
-    config_t conf = {0};
-    if(argc == 1)
+    if(!flags_parse(flags,sizeof(flags)/sizeof(flags[0]),&argc,&argv))
+    {
+        flags_error();
+        return 1;
+    }
+    if(argc < 1)
     {
         printf("Usage: cat [FILES]\n");
     }
-    uint32_t i = 1;
-    for(;i < argc;++i)
+    for(uint32_t i = 0;i < argc;++i)
     {
-        char* flag = argv[i];
-        if(*flag != '-') continue;
-        if(*flag == '-') flag++;
-        if(*flag == '-') flag++;
-        if((strcmp(flag,"n") == 0) || (strcmp(flag,"number") == 0))
-        {
-            conf.line_numbers = true;
-        }
-        else
-        {
-            printf("Unknown flag %s \n",flag);
-        }
-        *argv[i] = 0;
-    }
-    for(i = 1;i < argc;++i)
-    {
-        if(!(*argv[i])) continue;
         if(!cat(argv[i],&conf))
         {
             printf("cat failed: %s : %s\n",argv[i],strerror(errno));
